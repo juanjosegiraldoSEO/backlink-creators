@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link Authority Academy — Backlink Specialist Certification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1622;        /* deep clinical navy */
+    --ink-2:#0F1E2E;
+    --panel:#14273A;      /* raised panel */
+    --panel-2:#1B344B;
+    --line:#274560;       /* hairlines */
+    --teal:#2FD6BE;       /* primary signal (recovery/trust) */
+    --teal-dim:#1f9d8c;
+    --gold:#F2B441;       /* authority accent */
+    --text:#EAF1F7;
+    --muted:#90A6BC;
+    --muted-2:#6B8298;
+    --good:#3FD08A;
+    --warn:#E8A13A;
+    --bad:#E86C6C;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(1200px 700px at 75% -10%, #16304A 0%, var(--ink) 55%) fixed;
+    color:var(--text);font-family:var(--body);overflow:hidden;
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* progress + counter */
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));width:0;z-index:50;transition:width .35s ease}
+  #counter{position:fixed;top:16px;right:22px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--muted);z-index:40}
+  #counter b{color:var(--teal);font-weight:500}
+
+  /* stage */
+  #stage{height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;padding:64px 56px 88px}
+  .slide{display:none;width:100%;max-width:980px;animation:fade .45s ease}
+  .slide.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal);display:inline-block}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,58px);line-height:1.04;letter-spacing:-.02em;margin-bottom:18px}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(24px,3.6vw,40px);line-height:1.08;letter-spacing:-.015em;margin-bottom:22px}
+  .lead{font-size:clamp(15px,1.6vw,19px);color:var(--muted);max-width:62ch;line-height:1.6}
+  p{line-height:1.6}
+  strong{color:var(--text);font-weight:600}
+  .accent{color:var(--teal)}
+  .gold{color:var(--gold)}
+
+  /* layout helpers */
+  .grid{display:grid;gap:14px;margin-top:8px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media (max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 18px}
+  .card h3{font-family:var(--display);font-size:16px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .card p{font-size:14px;color:var(--muted)}
+  .num{font-family:var(--mono);color:var(--gold);font-size:13px}
+  ul.clean{list-style:none;margin-top:10px}
+  ul.clean li{padding:7px 0;padding-left:22px;position:relative;color:var(--muted);font-size:15px;border-bottom:1px solid rgba(39,69,96,.4)}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:2px;background:var(--teal)}
+  ul.clean li b{color:var(--text)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin:3px 4px 3px 0}
+  .pill.teal{color:var(--teal);border-color:var(--teal-dim)}
+  .pill.gold{color:var(--gold);border-color:#7a5e1f}
+  code,.code{font-family:var(--mono);font-size:13px;background:#091421;border:1px solid var(--line);border-radius:8px;padding:2px 7px;color:var(--teal)}
+  pre{font-family:var(--mono);font-size:13px;background:#091421;border:1px solid var(--line);border-radius:12px;padding:16px;color:#cfe7ff;overflow:auto;line-height:1.5}
+  pre .a{color:var(--teal)} pre .b{color:var(--gold)} pre .c{color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:500}
+  td{color:var(--muted)} td b{color:var(--text)}
+  .tier{display:flex;gap:10px;align-items:center}
+  .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .d-good{background:var(--good)} .d-warn{background:var(--warn)} .d-bad{background:var(--bad)}
+
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .pipe .step{flex:1;min-width:96px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center}
+  .pipe .step .n{font-family:var(--mono);color:var(--gold);font-size:12px}
+  .pipe .step .t{font-family:var(--display);font-size:13px;font-weight:600;margin-top:4px}
+
+  /* donut for anchor ratios */
+  .donut-wrap{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-top:10px}
+  .legend div{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px;color:var(--muted)}
+  .legend .sw{width:14px;height:14px;border-radius:4px;flex:none}
+
+  /* network hero */
+  .hero-net{position:relative;height:130px;margin:24px 0 8px}
+  .node{position:absolute;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(47,214,190,.12)}
+  .node.g{background:var(--gold);box-shadow:0 0 0 4px rgba(242,180,65,.12)}
+
+  .badge{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--teal-dim),var(--teal));color:#05221d;font-family:var(--display);font-weight:700;padding:12px 22px;border-radius:999px;font-size:18px;margin-top:8px}
+
+  /* controls */
+  #bar{position:fixed;bottom:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:linear-gradient(0deg,rgba(7,16,26,.95),rgba(7,16,26,0));z-index:45}
+  .ctrl{display:flex;gap:10px;align-items:center}
+  button.nav{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--text);background:var(--panel);border:1px solid var(--line);padding:10px 16px;border-radius:10px;cursor:pointer;transition:.18s}
+  button.nav:hover{border-color:var(--teal);color:var(--teal)}
+  button.nav:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  button.nav:disabled{opacity:.35;cursor:default}
+  #notesBtn.on{background:var(--teal);color:#05221d;border-color:var(--teal)}
+  .brandmark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.02em;color:var(--muted)}
+  .brandmark .dotmk{color:var(--teal)}
+
+  /* notes drawer */
+  #notes{position:fixed;left:0;right:0;bottom:64px;max-height:42vh;overflow:auto;background:#081320;border-top:1px solid var(--line);padding:20px 56px;transform:translateY(110%);transition:transform .3s ease;z-index:44}
+  #notes.open{transform:none}
+  #notes h4{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  #notes p{color:var(--muted);font-size:14.5px;line-height:1.65;max-width:80ch}
+  #notes .vis{margin-top:10px;color:var(--muted-2);font-size:13px}
+  #notes .vis b{color:var(--teal)}
+  .hint{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--muted-2);z-index:30;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="counter"><b id="cur">01</b> / <span id="tot">38</span></div>
+<div id="stage"><!-- slides injected --></div>
+
+<div id="notes" aria-live="polite">
+  <h4>Speaker notes</h4>
+  <p id="notesText"></p>
+  <div class="vis" id="notesVis"></div>
+</div>
+<div class="hint" id="hint">← → to navigate · N for notes · F fullscreen</div>
+
+<div id="bar">
+  <span class="brandmark">Link Authority Academy<span class="dotmk"> ●</span></span>
+  <div class="ctrl">
+    <button class="nav" id="notesBtn">Notes</button>
+    <button class="nav" id="prev">← Prev</button>
+    <button class="nav" id="next">Next →</button>
+  </div>
+</div>
+
+<script>
+/* ---- slide data ---- */
+const slides = [
+{
+  eyebrow:"Backlink Specialist Certification",
+  html:`<h1>The Link Authority Playbook</h1>
+  <p class="lead">An internal certification program for off-page SEO &amp; digital PR specialists building authority for <span class="accent">AA-Meetings.com</span> and <span class="gold">Therapist.org</span>.</p>
+  <div class="hero-net">
+    <div class="node" style="width:18px;height:18px;left:8%;top:30%"></div>
+    <div class="node g" style="width:14px;height:14px;left:30%;top:65%"></div>
+    <div class="node" style="width:24px;height:24px;left:48%;top:18%"></div>
+    <div class="node" style="width:12px;height:12px;left:66%;top:70%"></div>
+    <div class="node g" style="width:20px;height:20px;left:84%;top:40%"></div>
+    <svg style="position:absolute;inset:0;width:100%;height:100%" stroke="#274560" stroke-width="1.2" fill="none">
+      <line x1="9%" y1="36%" x2="49%" y2="24%"/><line x1="31%" y1="69%" x2="49%" y2="24%"/>
+      <line x1="49%" y1="24%" x2="67%" y2="73%"/><line x1="49%" y1="24%" x2="85%" y2="46%"/>
+      <line x1="67%" y1="73%" x2="85%" y2="46%"/>
+    </svg>
+  </div>`,
+  notes:"Welcome the team. This program turns a complete beginner into a high-performing specialist. Set the tone immediately: our niche is YMYL (Your Money or Your Life), so ethics and quality aren't optional — they're the whole strategy.",
+  vis:"Link-node network motif animating in; brand teal + gold."
+},
+{
+  eyebrow:"Why we exist",
+  html:`<h2>We build authority for people at vulnerable moments</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="accent">AA-Meetings.com</h3><p>Helping people in recovery from alcoholism find meetings and support — often searching at a moment of crisis.</p></div>
+    <div class="card"><h3 class="gold">Therapist.org</h3><p>Connecting people to licensed mental health professionals and trustworthy information when they need help most.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Every link we earn supports someone at a hard moment. That responsibility sets a higher bar for accuracy, sensitivity, and trust.</p>`,
+  notes:"Frame the moral weight. We are not selling sneakers. A misleading link or a sketchy association can hurt a real person. This mindset is what keeps us white-hat and, conveniently, is exactly what ranks in YMYL.",
+  vis:"Split panel, recovery vs mental health."
+},
+{
+  eyebrow:"Course map",
+  html:`<h2>Your journey: 14 parts → certification</h2>
+  <div class="grid g3">
+    <ul class="clean"><li><b>1.</b> Backlink fundamentals</li><li><b>2.</b> SEO &amp; Google's model</li><li><b>3.</b> Our niche &amp; relevance</li><li><b>4.</b> Authority evaluation</li><li><b>5.</b> The 8-step master SOP</li></ul>
+    <ul class="clean"><li><b>6.</b> Free publishing sources</li><li><b>7.</b> Guest posting system</li><li><b>8.</b> Digital PR</li><li><b>9.</b> Anchor strategy</li><li><b>10.</b> QA process</li></ul>
+    <ul class="clean"><li><b>11.</b> KPI dashboard</li><li><b>12.</b> Advanced link building</li><li><b>13.</b> Daily workflow</li><li><b>14.</b> Certification test</li></ul>
+  </div>`,
+  notes:"Preview the arc. Tell them up front there's a 10-question certification test at the end, then a shadow period and supervised first links before they work solo.",
+  vis:"Roadmap / numbered columns."
+},
+{
+  eyebrow:"Fundamentals · 01",
+  html:`<h2>What is a backlink?</h2>
+  <p class="lead">A hyperlink on another site that points to ours — in plain terms, a public <span class="accent">vote</span>. Three parts matter:</p>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card"><span class="num">01</span><h3>Linking page</h3><p>Where the link physically lives.</p></div>
+    <div class="card"><span class="num">02</span><h3>Destination</h3><p>The page on our site it points to.</p></div>
+    <div class="card"><span class="num">03</span><h3>Anchor text</h3><p>The visible, clickable words.</p></div>
+  </div>
+  <pre style="margin-top:16px">&lt;a href=<span class="b">"https://aa-meetings.com/find-a-meeting/"</span>&gt;<span class="a">find a local AA meeting</span>&lt;/a&gt;</pre>`,
+  notes:"Walk the Verywell Mind → AA-Meetings example: a health editor links 'find a local AA meeting' to our meeting finder. That's a vote from a trusted source.",
+  vis:"Annotated <a href> snippet."
+},
+{
+  eyebrow:"Fundamentals · 02",
+  html:`<h2>Why backlinks matter</h2>
+  <div class="grid g3">
+    <div class="card"><h3 class="accent">Rankings</h3><p>How we outrank entrenched YMYL competitors when content is comparable.</p></div>
+    <div class="card"><h3 class="accent">Crawl &amp; index</h3><p>Crawlers find new city/condition pages faster when links point at them.</p></div>
+    <div class="card"><h3 class="accent">Referral trust</h3><p>A county health dept link sends real, pre-trusted humans to us.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Links are one of Google's most important ranking signals — and the lever that moves competitive rankings.</p>`,
+  notes:"Emphasize: content gets you to the start line; links win the race against Psychology Today, SAMHSA, and the treatment networks.",
+  vis:"Three-icon row."
+},
+{
+  eyebrow:"Fundamentals · 03",
+  html:`<h2>How Google evaluates links</h2>
+  <p class="lead">Google weighs links, it doesn't just count them.</p>
+  <div class="grid g2" style="margin-top:12px">
+    <ul class="clean"><li><b>Authority</b> of linking domain &amp; page</li><li><b>Relevance</b> to our topic</li><li><b>Editorial intent</b> (earned vs. dropped)</li><li><b>Attributes</b> (nofollow / sponsored / ugc)</li></ul>
+    <ul class="clean"><li><b>Placement</b> (in-content beats footer)</li><li><b>Anchor text</b> (but not over-optimized)</li><li><b>Neighborhood</b> (what else it links to)</li></ul>
+  </div>
+  <p class="lead" style="margin-top:16px"><span class="gold">One excellent link can outweigh a thousand junk links.</span></p>`,
+  notes:"This is the mental model behind every prospecting decision. We are quality hunters, not quantity farmers.",
+  vis:"Weighted-scales graphic."
+},
+{
+  eyebrow:"Fundamentals · 04",
+  html:`<h2>E-E-A-T &amp; the YMYL standard</h2>
+  <div class="grid g4">
+    <div class="card"><h3>Experience</h3><p>Real, lived/first-hand input.</p></div>
+    <div class="card"><h3>Expertise</h3><p>Credentialed authors &amp; reviewers.</p></div>
+    <div class="card"><h3 class="accent">Authority</h3><p>Links amplify this.</p></div>
+    <div class="card"><h3 class="accent">Trust</h3><p>Links amplify this.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Health &amp; recovery are <strong>YMYL</strong> — held to a higher bar. Links from clinicians, accredited programs, universities and health agencies broadcast Authority &amp; Trust.</p>`,
+  notes:"This is WHY our strategy centers on relevant, credentialed, institutional sources rather than generic high-DR sites.",
+  vis:"E-E-A-T pyramid; A and T highlighted."
+},
+{
+  eyebrow:"Fundamentals · 05",
+  html:`<h2>The evaluation lens</h2>
+  <p class="lead" style="font-size:22px;color:var(--text);margin-bottom:18px">Link value ≈ <span class="accent">Authority</span> × <span class="gold">Relevance</span> × <span style="color:var(--good)">Trust</span></p>
+  <div class="grid g3">
+    <div class="card"><h3 class="accent">Authority</h3><p>DR / DA / AS, traffic, link profile strength.</p></div>
+    <div class="card"><h3 class="gold">Relevance</h3><p>A multiplier. On-topic at domain, page &amp; context level.</p></div>
+    <div class="card"><h3 style="color:var(--good)">Trust</h3><p>Real org, clean profile, no PBN, YMYL-grade legitimacy.</p></div>
+  </div>
+  <p class="lead" style="margin-top:16px">Because relevance multiplies, a perfectly on-topic medium-authority link beats a high-authority off-topic one. <strong>The weakest critical signal governs.</strong></p>`,
+  notes:"Drill this equation. When a beginner is dazzled by a DR 80 site, ask: relevant? trustworthy? If not, it's a reject.",
+  vis:"Three interlocking circles."
+},
+{
+  eyebrow:"Fundamentals · 06",
+  html:`<h2>Link equity &amp; link attributes</h2>
+  <div class="grid g2">
+    <div>
+      <ul class="clean"><li><b>Dofollow</b> — default; eligible to pass equity. What we work hardest for.</li><li><b>Nofollow</b> — a hint not to pass endorsement; still great for traffic &amp; a natural profile.</li><li><b>Sponsored</b> — required for paid/affiliate links.</li><li><b>UGC</b> — forum &amp; comment links.</li></ul>
+    </div>
+    <div class="card"><h3 class="gold">Compliance rule</h3><p>If money or free product changed hands, the link carries <code>sponsored</code> (or nofollow). We never disguise paid links as editorial dofollow. In YMYL that's playing with fire.</p>
+    <p style="margin-top:10px">Equity divides among a page's outbound links — fewer links + higher authority + in-content = more equity each.</p></div>
+  </div>`,
+  notes:"Target ~60–75% dofollow across the profile. A 100% dofollow profile looks unnatural. Nofollow from a .gov or major media site is still elite.",
+  vis:"Equity 'flow pipes' splitting among outbound links."
+},
+{
+  eyebrow:"Our niche",
+  html:`<h2>Know both topic cores cold</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="accent">AA-Meetings.com</h3>
+      <span class="pill teal">Alcohol recovery</span><span class="pill teal">AA meetings</span><span class="pill teal">Substance abuse</span><span class="pill teal">Recovery resources</span><span class="pill teal">Sobriety support</span><span class="pill teal">12 steps</span><span class="pill teal">Online meetings</span></div>
+    <div class="card"><h3 class="gold">Therapist.org</h3>
+      <span class="pill gold">Mental health</span><span class="pill gold">Therapy</span><span class="pill gold">Counseling</span><span class="pill gold">Psychologists</span><span class="pill gold">Psychiatrists</span><span class="pill gold">Anxiety</span><span class="pill gold">Depression</span><span class="pill gold">Trauma</span></div>
+  </div>
+  <p class="lead" style="margin-top:16px">You can't judge relevance until you know these. Ideal targets: meeting finders, city pages, condition hubs, decision guides.</p>`,
+  notes:"Quiz them: name three highly-relevant page topics for each property. They should be fluent in the niche vocabulary.",
+  vis:"Two topic clouds."
+},
+{
+  eyebrow:"Our niche · relevance",
+  html:`<h2>Relevance tiers</h2>
+  <table>
+    <tr><th>Tier</th><th>Examples</th></tr>
+    <tr><td><span class="tier"><span class="dot d-good"></span><b>Highly relevant</b></span></td><td>County addiction-services page; .edu counseling resources; clinician-authored therapy article; SAMHSA resource page.</td></tr>
+    <tr><td><span class="tier"><span class="dot d-warn"></span><b>Moderately relevant</b></span></td><td>Wellness blog article on stress/sobriety; local news story on a recovery initiative; insurance page touching our topic.</td></tr>
+    <tr><td><span class="tier"><span class="dot d-bad"></span><b>Irrelevant / toxic</b></span></td><td>Casino, vape, payday, alcohol-retail; generic link farms; off-topic crypto/fashion blogs.</td></tr>
+  </table>
+  <p class="lead" style="margin-top:14px"><span class="gold">Recovery red flag:</span> never accept links near alcohol promotion for AA-Meetings.com — toxic by association.</p>`,
+  notes:"Evaluate the PAGE first, then the domain. A general news site is low domain-relevance but its alcoholism article is high page-relevance — and that's what counts most.",
+  vis:"Traffic-light tiers."
+},
+{
+  eyebrow:"Authority",
+  html:`<h2>Reading the metrics</h2>
+  <div class="grid g3">
+    <div class="card"><h3>DR / DA</h3><p>Ahrefs / Moz link-power scores (logarithmic).</p></div>
+    <div class="card"><h3>Authority Score</h3><p>Semrush — blends links + traffic + spam. Often most balanced.</p></div>
+    <div class="card"><h3 class="accent">Organic traffic</h3><p>The reality check.</p></div>
+    <div class="card"><h3>Indexed pages</h3><p>Real publisher vs. thin shell.</p></div>
+    <div class="card"><h3>Spam signals</h3><p>Toxicity, bad neighbors, link spikes.</p></div>
+    <div class="card"><h3>Trust signals</h3><p>Real org, named authors, accreditations.</p></div>
+  </div>
+  <p class="lead" style="margin-top:14px"><span class="gold">High DR + near-zero traffic = manipulated. Reject.</span> Triangulate; never trust one number.</p>`,
+  notes:"The #1 way beginners get fooled is trusting DR alone. Always pull traffic to corroborate.",
+  vis:"Cluster of metric dials."
+},
+{
+  eyebrow:"Authority · scorecard",
+  html:`<h2>The prospect scorecard</h2>
+  <table>
+    <tr><th>Signal</th><th>Excellent</th><th>Acceptable</th><th>Reject</th></tr>
+    <tr><td><b>DR / DA</b></td><td>50+</td><td>25–49</td><td>&lt;20*</td></tr>
+    <tr><td><b>Authority Score</b></td><td>40+</td><td>20–39</td><td>&lt;15</td></tr>
+    <tr><td><b>Organic traffic</b></td><td>10k+</td><td>1k–10k</td><td>~0 w/ high DR</td></tr>
+    <tr><td><b>Relevance</b></td><td>High</td><td>Moderate</td><td>Irrelevant</td></tr>
+    <tr><td><b>Outbound neighborhood</b></td><td>Curated</td><td>Mixed/legit</td><td>Spam/casino</td></tr>
+  </table>
+  <p class="lead" style="margin-top:12px">*Unless .gov / .edu / known-good. <strong>The weakest critical signal decides the verdict.</strong></p>`,
+  notes:"Thresholds are starting points — calibrate with the team lead. Excellent authority + reject-level relevance or spam = overall reject.",
+  vis:"Scorecard table."
+},
+{
+  eyebrow:"Authority · calibration",
+  html:`<h2>Good / average / bad links</h2>
+  <div class="grid g3">
+    <div class="card"><h3 style="color:var(--good)">Excellent</h3><p>.gov / .edu resource page; in-content link from a DR 70+ medically-reviewed health article; clinician-authored guest post.</p></div>
+    <div class="card"><h3 class="gold">Average</h3><p>Legit health/local directory; relevant mid-tier wellness blog; association member listing.</p></div>
+    <div class="card"><h3 style="color:var(--bad)">Bad</h3><p>"DR60 dofollow $15" marketplaces; comment/forum spam; sitewide footer farms; recovery brand next to casino content.</p></div>
+  </div>
+  <p class="lead" style="margin-top:16px">The taste test: <strong>"Would a careful editor at a respected health publication be comfortable placing this link?"</strong></p>`,
+  notes:"Build their instinct. Average links are fine and necessary — they form the natural base. Bad links don't just waste time, they can harm a YMYL site.",
+  vis:"Three sample cards."
+},
+{
+  eyebrow:"Philosophy",
+  html:`<h2>Quality beats quantity</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Diminishing returns</h3><p>Once spam patterns flag, more junk doesn't help — it hurts.</p></div>
+    <div class="card"><h3>YMYL scrutiny</h3><p>Health profiles face a higher trust bar than any other niche.</p></div>
+    <div class="card"><h3>Compounding trust</h3><p>Each real authoritative link raises the baseline for every future link.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">A handful of <span class="accent">.gov / .edu / top-publisher</span> links moves rankings more than 5,000 directory submissions.</p>`,
+  notes:"This philosophy underpins the whole program. Reward specialists for referring-domain quality, not raw link counts.",
+  vis:"One gold link vs. a gray pile."
+},
+{
+  eyebrow:"The master SOP",
+  html:`<h2>8 steps, every time</h2>
+  <div class="pipe">
+    <div class="step"><div class="n">01</div><div class="t">Qualify</div></div>
+    <div class="step"><div class="n">02</div><div class="t">Authority</div></div>
+    <div class="step"><div class="n">03</div><div class="t">Relevance</div></div>
+    <div class="step"><div class="n">04</div><div class="t">Content</div></div>
+    <div class="step"><div class="n">05</div><div class="t">Submit</div></div>
+    <div class="step"><div class="n">06</div><div class="t">Index</div></div>
+    <div class="step"><div class="n">07</div><div class="t">Verify</div></div>
+    <div class="step"><div class="n">08</div><div class="t">Track</div></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Every meaningful link flows through this pipeline. <strong>Skip none.</strong></p>`,
+  notes:"Have them memorize the sequence. The next four slides drill each step's objective, tools, checklist and top mistake.",
+  vis:"8-node pipeline."
+},
+{
+  eyebrow:"SOP deep dive · 1–2",
+  html:`<h2>Qualify · Verify authority</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="num">Step 1 — Qualify</h3><p><b>30-sec gate:</b> relevant? accepts a link? clean? Open the <i>actual</i> target page, not the homepage.</p><p style="margin-top:8px;color:var(--bad)">Mistake: chasing DR while ignoring relevance.</p></div>
+    <div class="card"><h3 class="num">Step 2 — Authority</h3><p>Pull DR/DA/AS <i>and</i> traffic. Check the site's own backlinks &amp; indexed pages.</p><p style="margin-top:8px;color:var(--bad)">Mistake: trusting DR in isolation (PBN trap).</p></div>
+  </div>`,
+  notes:"Tools: browser, Ahrefs/Semrush/Moz toolbars, prospect sheet. Don't spend 30 minutes on a prospect that fails the 30-second gate.",
+  vis:"Two step cards with checklists."
+},
+{
+  eyebrow:"SOP deep dive · 3–4",
+  html:`<h2>Verify relevance · Create content</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="num">Step 3 — Relevance</h3><p>Read the page. Confirm domain topical consistency. Find a sentence where our link <i>genuinely helps the reader</i>.</p><p style="margin-top:8px;color:var(--bad)">Mistake: forcing a link into an unrelated article.</p></div>
+    <div class="card"><h3 class="num">Step 4 — Content</h3><p>Create the asset that <i>earns</i> the yes: original, accurate, medically reviewed where needed, honestly anchored.</p><p style="margin-top:8px;color:var(--bad)">Mistake: thin/AI-spun content (instant YMYL rejection).</p></div>
+  </div>`,
+  notes:"Match the asset to the link type: guest article, data stat, expert quote, updated resource, free tool. One natural self-link per piece.",
+  vis:"Two step cards."
+},
+{
+  eyebrow:"SOP deep dive · 5–6",
+  html:`<h2>Submit / outreach · Indexation</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="num">Step 5 — Submit</h3><p>Personalize every outreach; lead with <i>their</i> reader's benefit; make the ask easy. Complete directory fields consistently.</p><p style="margin-top:8px;color:var(--bad)">Mistake: copy-paste blasts; disguising paid links.</p></div>
+    <div class="card"><h3 class="num">Step 6 — Index</h3><p>Confirm the linking page is indexable &amp; indexed — or the link has zero ranking value.</p><p style="margin-top:8px;color:var(--bad)">Mistake: celebrating a link on a noindex page.</p></div>
+  </div>`,
+  notes:"Tools: outreach platform (Pitchbox/BuzzStream/Hunter), submission forms. Never use spammy auto-indexers; encourage indexation naturally.",
+  vis:"Two step cards."
+},
+{
+  eyebrow:"SOP deep dive · 7–8",
+  html:`<h2>Verify · Track</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="num">Step 7 — Verify</h3><p>View source on the live page: exact destination URL, correct anchor, correct <code>rel</code>, in-content placement.</p><p style="margin-top:8px;color:var(--bad)">Mistake: trusting "it's live!" without inspecting source.</p></div>
+    <div class="card"><h3 class="num">Step 8 — Track</h3><p>Log date, URLs, anchor + type, dofollow, DR/AS, relevance tier, QA status. Add to monitoring; roll into KPIs.</p><p style="margin-top:8px;color:var(--bad)">Mistake: building links you never track.</p></div>
+  </div>`,
+  notes:"You can't manage what you don't measure. Removal monitoring matters — links vanish silently and ratios drift if unwatched.",
+  vis:"Two step cards."
+},
+{
+  eyebrow:"Free publishing sources",
+  html:`<h2>Where to build — 12 categories</h2>
+  <div class="grid g3">
+    <span class="pill">Health directories</span><span class="pill">Mental health directories</span><span class="pill">Recovery directories</span>
+    <span class="pill">Local directories</span><span class="pill">Business directories</span><span class="pill">Non-profit directories</span>
+    <span class="pill">Educational (.edu)</span><span class="pill">Community sites</span><span class="pill">Press release sites</span>
+    <span class="pill">Social profiles</span><span class="pill">Resource pages</span><span class="pill">Professional associations</span>
+  </div>
+  <p class="lead" style="margin-top:16px">Sequence: <span class="accent">Foundation</span> (social + core local) → <span class="gold">Niche relevance</span> → High-trust outreach (.edu/.gov/associations).</p>
+  <p class="lead" style="margin-top:8px">Free ≠ spam. Verify metrics live. Credentialed listings stay honest.</p>`,
+  notes:"Full database with URLs, estimated authority, dofollow status, difficulty, recommended anchor, and step-by-step submission is in Section 4 of the manual. Don't blast all 30 on day one.",
+  vis:"Categorized grid of source types."
+},
+{
+  eyebrow:"Guest posting",
+  html:`<h2>The guest posting system</h2>
+  <div class="pipe">
+    <div class="step"><div class="t">Prospect</div></div>
+    <div class="step"><div class="t">Outreach</div></div>
+    <div class="step"><div class="t">Follow-up</div></div>
+    <div class="step"><div class="t">Negotiate</div></div>
+    <div class="step"><div class="t">Create</div></div>
+    <div class="step"><div class="t">Place</div></div>
+  </div>
+  <p class="lead" style="margin-top:16px">We <span class="accent">earn</span> placements with quality and credentialed expertise. We don't <span class="gold">buy</span> editorial dofollow links — paid = <code>sponsored</code>, logged.</p>
+  <p class="lead" style="margin-top:8px">Operators: <code>"mental health" + "write for us"</code>, <code>"recovery" + "contributor guidelines"</code>.</p>`,
+  notes:"This is our highest-value repeatable play. Offer a clinician author for Therapist.org; accurate, stigma-free lived-experience content for AA-Meetings.com.",
+  vis:"Six-stage funnel."
+},
+{
+  eyebrow:"Guest posting · templates",
+  html:`<h2>Outreach that gets a yes</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="accent">Therapist.org</h3><p style="font-family:var(--mono);font-size:12.5px;color:#cfe7ff">Subject: Contributor idea — helping readers choose the right therapist</p><p style="margin-top:8px;font-size:13px">"I read your piece on [X]… I work with Therapist.org. I'd love to contribute an original, clinician-reviewed article: 'Psychologist vs. Psychiatrist vs. Therapist.' Written to your guidelines — a fit for your readers?"</p></div>
+    <div class="card"><h3 class="gold">AA-Meetings.com</h3><p style="font-family:var(--mono);font-size:12.5px;color:#cfe7ff">Subject: Guest article — what happens at your first AA meeting</p><p style="margin-top:8px;font-size:13px">"Your post on [X] meets people where they are… I'm with AA-Meetings.com, a free meeting finder. I'd like to contribute 'What to Expect at Your First AA Meeting.' Compassionate, accurate, ~1,200 words. Helpful for your readers?"</p></div>
+  </div>
+  <p class="lead" style="margin-top:14px">Principles: <strong>personalize · value-first · one clear ask.</strong></p>`,
+  notes:"Full templates (incl. healthcare-blog and follow-ups) are in Section 6. Never lead with 'give me a link' — lead with what their reader gains.",
+  vis:"Two email mockups."
+},
+{
+  eyebrow:"Guest posting · follow-up",
+  html:`<h2>Persistence without pestering</h2>
+  <div class="grid g3">
+    <div class="card"><span class="num">Day 0</span><h3>Initial pitch</h3><p>Personalized, value-first, one ask.</p></div>
+    <div class="card"><span class="num">Day 3–4</span><h3>Follow-up #1</h3><p>"Floating this back up — happy to send a quick outline first."</p></div>
+    <div class="card"><span class="num">Day 8–10</span><h3>Follow-up #2 (final)</h3><p>Gracious close: "I'll close this out so I'm not cluttering your inbox."</p></div>
+  </div>
+  <p class="lead" style="margin-top:16px">Most editors simply missed the first email. Two polite nudges, then stop.</p>`,
+  notes:"A large share of placements come from follow-up #1. The graceful final note keeps the door open for future relationships.",
+  vis:"Three-point timeline."
+},
+{
+  eyebrow:"Digital PR",
+  html:`<h2>The highest-trust links</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Expert sourcing</h3><p>Qwoted, Featured, #JournoRequest — answer journalist queries with credentialed experts.</p></div>
+    <div class="card"><h3>Data PR</h3><p>Original stats that the press wants to cite.</p></div>
+    <div class="card"><h3>Podcasts</h3><p>Guest spots → show-note links.</p></div>
+    <div class="card"><h3>Interviews</h3><p>Written Q&amp;A → bio + contextual links.</p></div>
+    <div class="card"><h3>Roundups</h3><p>Participate &amp; host expert roundups.</p></div>
+    <div class="card"><h3>Featured expert</h3><p>Become a standing source editors return to.</p></div>
+  </div>
+  <p class="lead" style="margin-top:14px">Be a <span class="accent">useful, accurate source</span> — the links follow.</p>`,
+  notes:"Digital PR earns links from journalists, universities, and major publishers — the links that move YMYL rankings most. Accuracy and sensitivity are non-negotiable here.",
+  vis:"Press / mic / data icons."
+},
+{
+  eyebrow:"Digital PR · data SOP",
+  html:`<h2>Data PR &amp; expert sourcing SOP</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="accent">Build the hook</h3><p>"Cities with the fewest in-person AA meetings per capita." "Therapist wait times by state." Clean report + charts + methodology.</p></div>
+    <div class="card"><h3 class="gold">Source the experts</h3><p>Maintain media kit: credentialed spokespeople, bios, headshots. Monitor queries daily; reply fast, quotable, accurate, attributed.</p></div>
+  </div>
+  <p class="lead" style="margin-top:16px">Pitch with the headline stat up top; offer an exclusive to a top outlet; follow up once; then syndicate.</p>`,
+  notes:"Never fabricate data or credentials. In our niche, a sloppy quote isn't just bad PR — it can mislead a vulnerable reader.",
+  vis:"Data-study landing page mockup."
+},
+{
+  eyebrow:"Anchor strategy",
+  html:`<h2>The five anchor types</h2>
+  <div class="grid g2">
+    <ul class="clean">
+      <li><b>Branded</b> — "AA-Meetings.com", "Therapist.org"</li>
+      <li><b>Naked URL</b> — "https://aa-meetings.com"</li>
+      <li><b>Generic</b> — "this resource", "learn more"</li>
+    </ul>
+    <ul class="clean">
+      <li><b>Partial match</b> — "find AA meetings in your area"</li>
+      <li><b>Exact match</b> — "therapist near me" <span style="color:var(--bad)">(sparing!)</span></li>
+    </ul>
+  </div>
+  <p class="lead" style="margin-top:16px"><span class="gold">Over-using exact-match is the single fastest spam fingerprint in YMYL.</span></p>`,
+  notes:"Beginners over-optimize exact-match. A natural profile is dominated by branded, naked and generic anchors — because that's how humans actually link.",
+  vis:"Labeled anchor chips."
+},
+{
+  eyebrow:"Anchor strategy · ratios",
+  html:`<h2>Target distribution</h2>
+  <div class="donut-wrap">
+    <svg width="190" height="190" viewBox="0 0 42 42">
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#13243500" stroke-width="6"></circle>
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="var(--teal)" stroke-width="6" stroke-dasharray="40 60" stroke-dashoffset="25"></circle>
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="var(--gold)" stroke-width="6" stroke-dasharray="18 82" stroke-dashoffset="-15"></circle>
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#5a7da0" stroke-width="6" stroke-dasharray="18 82" stroke-dashoffset="-33"></circle>
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#3FD08A" stroke-width="6" stroke-dasharray="17 83" stroke-dashoffset="-51"></circle>
+      <circle cx="21" cy="21" r="15.9155" fill="none" stroke="var(--bad)" stroke-width="6" stroke-dasharray="7 93" stroke-dashoffset="-68"></circle>
+    </svg>
+    <div class="legend">
+      <div><span class="sw" style="background:var(--teal)"></span>Branded — 35–45%</div>
+      <div><span class="sw" style="background:var(--gold)"></span>Naked URL — 15–20%</div>
+      <div><span class="sw" style="background:#5a7da0"></span>Generic — 15–20%</div>
+      <div><span class="sw" style="background:#3FD08A"></span>Partial match — 15–20%</div>
+      <div><span class="sw" style="background:var(--bad)"></span>Exact match — 5–10% (cap)</div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:12px">Whole-profile guideline, not per-link. Audit monthly; steer with new links.</p>`,
+  notes:"If exact-match creeps past ~10%, switch new links to branded/generic until it normalizes. Let editors' natural anchors stand — that's a positive signal.",
+  vis:"Donut chart of anchor ratios."
+},
+{
+  eyebrow:"Anchor strategy · banks",
+  html:`<h2>Ready-to-use anchor banks</h2>
+  <div class="grid g2">
+    <div class="card"><h3 class="accent">AA-Meetings.com</h3>
+      <p style="font-size:13px"><b>Partial:</b> find AA meetings in your area · local recovery support groups · online AA meetings</p>
+      <p style="font-size:13px;margin-top:6px"><b>Exact (sparing):</b> AA meetings near me · Alcoholics Anonymous meetings · find AA meetings</p></div>
+    <div class="card"><h3 class="gold">Therapist.org</h3>
+      <p style="font-size:13px"><b>Partial:</b> find a licensed therapist near you · online therapy resources · directory of mental health professionals</p>
+      <p style="font-size:13px;margin-top:6px"><b>Exact (sparing):</b> therapist near me · licensed therapist directory · online therapy</p></div>
+  </div>
+  <p class="lead" style="margin-top:14px"><strong>Rule:</strong> match the anchor to the destination page's actual topic.</p>`,
+  notes:"Full banks (branded/naked/generic too) in Section 8. Don't point 'therapist near me' at a generic homepage — point it at the directory page that serves that query.",
+  vis:"Two anchor tables."
+},
+{
+  eyebrow:"Quality control",
+  html:`<h2>QA: the seven gates</h2>
+  <div class="grid g2">
+    <ul class="clean"><li>1 — <b>Indexed</b> linking page (crawlable)</li><li>2 — <b>Relevant</b> topic</li><li>3 — <b>Trustworthy</b> content &amp; neighborhood</li><li>4 — <b>Real traffic</b> corroborates authority</li></ul>
+    <ul class="clean"><li>5 — <b>No spam signals</b></li><li>6 — <b>Proper anchor</b> (on-strategy)</li><li>7 — <b>Correct landing page</b> + rel</li></ul>
+  </div>
+  <p class="lead" style="margin-top:16px"><span class="gold">No link counts toward KPIs until it passes all seven.</span></p>`,
+  notes:"QA protects us from wasted effort AND from accumulating links that could harm a YMYL site. Any link failing gate 3 or 5 goes on the disavow-watch list.",
+  vis:"Seven-gate checklist."
+},
+{
+  eyebrow:"Quality control · workflow",
+  html:`<h2>QA checklist &amp; workflow</h2>
+  <pre style="font-size:12px">LINK QA — [linking URL]
+[ ] 1 Linking page indexed in Google         <span class="a">Pass/Fail</span>
+[ ] 2 Page topic relevant to target          <span class="a">High/Mod/Low</span>
+[ ] 3 Site trustworthy (org + neighborhood)  <span class="a">Pass/Fail</span>
+[ ] 4 Traffic corroborates authority         <span class="a">Pass/Fail</span>
+[ ] 5 Spam/toxicity acceptable               <span class="a">Pass/Fail</span>
+[ ] 6 Anchor on-strategy (type: ____)        <span class="a">Pass/Fail</span>
+[ ] 7 Dest URL exact + rel correct           <span class="a">Pass/Fail</span>
+Verdict: <span class="b">APPROVED / REJECTED / FIX-AND-RECHECK</span></pre>
+  <p class="lead" style="margin-top:12px">Specialist self-QA → second reviewer spot-checks (and 100% of any new source type).</p>`,
+  notes:"Copy this block into the tracker per link. Failed links are fixed (follow up to correct anchor/URL) or removed from counts.",
+  vis:"Checklist card + review flow."
+},
+{
+  eyebrow:"KPIs",
+  html:`<h2>The KPI dashboard</h2>
+  <div class="grid g4">
+    <div class="card"><h3 class="accent">Links built</h3><p>QA-passed only.</p></div>
+    <div class="card"><h3 class="accent">Dofollow %</h3><p>Target 60–75%.</p></div>
+    <div class="card"><h3 class="gold">Referring domains</h3><p>New unique — the key metric.</p></div>
+    <div class="card"><h3>Avg DR/AS</h3><p>Quality of new domains.</p></div>
+    <div class="card"><h3>Indexed %</h3><p>Confirmed in Google.</p></div>
+    <div class="card"><h3>Organic traffic</h3><p>Trend for linked pages.</p></div>
+    <div class="card"><h3>Rankings impact</h3><p>Priority keyword movement.</p></div>
+    <div class="card"><h3 style="color:var(--bad)">Guardrails</h3><p>Exact-match %, spam flags.</p></div>
+  </div>
+  <p class="lead" style="margin-top:12px"><span class="gold">Referring domains &gt; raw links</span> — 20 domains beats 20 links from one site.</p>`,
+  notes:"Report quality guardrails alongside volume: exact-match %, avg traffic of new domains (catches PBN drift), relevance tier mix.",
+  vis:"Dashboard mockup with KPI tiles."
+},
+{
+  eyebrow:"KPIs · reporting",
+  html:`<h2>Monthly report template</h2>
+  <pre style="font-size:11.5px">SPECIALIST — MONTHLY REPORT   Property: ____  Month: ____
+
+VOLUME &amp; QUALITY
+- Approved links: ___ (Dofollow ___ / ___%)
+- New referring domains: ___   Avg DR/AS: ___
+- Indexed: ___/___  (___%)
+- Outreach: ___  Replies: ___ (__%)  Wins: ___ (__%)
+
+ANCHOR HEALTH
+- Branded _% Naked _% Generic _% Partial _% <span class="b">Exact _% (cap 10)</span>
+
+IMPACT
+- Priority keyword: from #__ to #__
+- Organic trend for linked pages: __% MoM
+- Links lost/removed: ___</pre>`,
+  notes:"The lead rolls these into a Looker Studio program dashboard reviewed monthly. Reallocate effort toward whatever produces the best relevant, indexed, dofollow domains per hour.",
+  vis:"Report sheet."
+},
+{
+  eyebrow:"Advanced",
+  html:`<h2>Advanced strategies</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Resource pages</h3><p>Get listed on curated .org/.edu/.gov resource lists.</p></div>
+    <div class="card"><h3>Broken-link</h3><p>Find dead links; offer our live replacement.</p></div>
+    <div class="card"><h3>Skyscraper</h3><p>Build something clearly better; pitch the linkers.</p></div>
+    <div class="card"><h3>Niche edits</h3><p>Contextual insertion into existing relevant articles.</p></div>
+    <div class="card"><h3>.edu / .gov</h3><p>Elite-trust outreach &amp; eligible listings.</p></div>
+    <div class="card"><h3>Scholarship</h3><p>Only if genuinely funded &amp; run.</p></div>
+  </div>
+  <p class="lead" style="margin-top:12px">Prioritize by <span class="accent">relevance &amp; trust per hour</span>. Plus: expert contributions &amp; local citations.</p>`,
+  notes:"Full SOPs for all nine in Section 11. Highest expected value per hour: resource-page + .edu/.gov outreach and digital PR.",
+  vis:"Strategy grid."
+},
+{
+  eyebrow:"Workflow",
+  html:`<h2>The daily playbook</h2>
+  <div class="grid g3">
+    <div class="card"><h3 class="accent">Daily</h3><ul class="clean"><li>Check sourcing inboxes → respond</li><li>Send personalized outreach</li><li>Verify/QA yesterday's links</li><li>Log everything</li></ul></div>
+    <div class="card"><h3 class="gold">Weekly</h3><ul class="clean"><li>Prospect &amp; qualify a fresh batch</li><li>Run one advanced play</li><li>Submit vetted directories</li><li>Mini anchor audit</li></ul></div>
+    <div class="card"><h3>Monthly</h3><ul class="clean"><li>Full anchor audit vs. targets</li><li>Refresh metrics; clean lost links</li><li>KPI report + review</li><li>Competitor link-gap analysis</li></ul></div>
+  </div>`,
+  notes:"Consistency compounds. The one-page daily flow: inboxes → verify yesterday → outreach → advance replies → today's slice of the weekly play → log → update pipeline.",
+  vis:"Day / week / month columns."
+},
+{
+  eyebrow:"Workflow · growth",
+  html:`<h2>The maturity path</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Beginner · mo. 1–2</h3><p>Foundation + execution. ~10–15 outreach/day. Zero careless QA fails. Master Sections 1–5.</p></div>
+    <div class="card"><h3 class="accent">Intermediate · mo. 3–6</h3><p>Owns guest posting + resource/broken-link. ~20–30 outreach/day. Steady relevant dofollow domains.</p></div>
+    <div class="card"><h3 class="gold">Advanced · mo. 6+</h3><p>Leads digital PR, .edu/.gov, skyscraper, expert programs. Owns editor relationships; mentors; shapes strategy.</p></div>
+  </div>
+  <p class="lead" style="margin-top:14px">Advanced goal: high-DR / .edu / .gov / major-publisher links that <strong>visibly move priority rankings</strong>.</p>`,
+  notes:"Everyone starts at foundation. Promotion is earned by referring-domain quality and reply/win-rate trends, not raw volume.",
+  vis:"Three-rung ladder."
+},
+{
+  eyebrow:"Guardrails",
+  html:`<h2>Ethics &amp; compliance recap</h2>
+  <ul class="clean" style="max-width:70ch">
+    <li><b>White-hat only</b> — we earn links by being genuinely useful, never buy our way into editorial dofollow.</li>
+    <li><b>Honest credentials</b> — credentialed listings are real; we never misrepresent licenses (a YMYL legal risk too).</li>
+    <li><b>Paid = sponsored</b> — always correctly attributed; never disguised.</li>
+    <li><b>Protect the recovery brand</b> — never near alcohol promotion, gambling, or other toxic associations.</li>
+    <li><b>Accuracy &amp; sensitivity</b> — content is reviewed; we serve people at vulnerable moments.</li>
+  </ul>
+  <p class="lead" style="margin-top:16px">This is how we win <span class="accent">and</span> stay safe. In YMYL, ethics <em>is</em> the strategy.</p>`,
+  notes:"Lock this in before the test. Anyone tempted by a shortcut should remember: a manual action or toxic association can wipe out months of legitimate gains — and can mislead a real person.",
+  vis:"Shield motif."
+},
+{
+  eyebrow:"Certification",
+  html:`<h2>Certification test</h2>
+  <div class="grid g2">
+    <ul class="clean" style="font-size:14px"><li>1. Define a backlink + its 3 components.</li><li>2. Why is relevance a <i>multiplier</i>? Recovery example.</li><li>3. DR 65, ~50 visits/mo — verdict?</li><li>4. List the 8 SOP steps in order.</li><li>5. Anchor distribution + why cap exact-match.</li></ul>
+    <ul class="clean" style="font-size:14px"><li>6. Name the 7 QA gates.</li><li>7. "$40 guaranteed dofollow" — how do you handle it?</li><li>8. Why are .gov/.edu elite even when nofollow?</li><li>9. Walk the broken-link SOP.</li><li>10. 3 KPIs + why "referring domains" beats "total links".</li></ul>
+  </div>
+  <div class="badge">✓ 8/10 to certify → shadow → first supervised links</div>`,
+  notes:"Answer key is in Section 13.1 of the manual. After certification: a shadow period, then supervised first links before working solo. Welcome to the Link Authority Academy.",
+  vis:"Question list + 'Certified' badge."
+}
+];
+
+/* ---- render ---- */
+const stage=document.getElementById('stage');
+slides.forEach((s,i)=>{
+  const el=document.createElement('section');
+  el.className='slide'+(i===0?' active':'');
+  el.innerHTML=`<div class="eyebrow">${s.eyebrow}</div>${s.html}`;
+  el.dataset.idx=i;
+  stage.appendChild(el);
+});
+document.getElementById('tot').textContent=String(slides.length).padStart(2,'0');
+
+let cur=0;
+const els=[...document.querySelectorAll('.slide')];
+const notes=document.getElementById('notes');
+const notesText=document.getElementById('notesText');
+const notesVis=document.getElementById('notesVis');
+const notesBtn=document.getElementById('notesBtn');
+let notesOpen=false;
+
+function show(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));
+  els.forEach((e,i)=>e.classList.toggle('active',i===cur));
+  document.getElementById('cur').textContent=String(cur+1).padStart(2,'0');
+  document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===slides.length-1;
+  notesText.textContent=slides[cur].notes||'';
+  notesVis.innerHTML=slides[cur].vis?`<b>Visual:</b> ${slides[cur].vis}`:'';
+}
+function next(){show(cur+1)}
+function prev(){show(cur-1)}
+function toggleNotes(){notesOpen=!notesOpen;notes.classList.toggle('open',notesOpen);notesBtn.classList.toggle('on',notesOpen)}
+
+document.getElementById('next').onclick=next;
+document.getElementById('prev').onclick=prev;
+notesBtn.onclick=toggleNotes;
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+  else if(e.key.toLowerCase()==='n'){toggleNotes()}
+  else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()}
+  else if(e.key==='Home'){show(0)}
+  else if(e.key==='End'){show(slides.length-1)}
+});
+// swipe (mobile)
+let tx=0;
+stage.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?next():prev()}},{passive:true});
+
+setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0';h.style.transition='opacity 1s'},4500);
+show(0);
+</script>
+</body>
+</html>
